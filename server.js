@@ -1,6 +1,7 @@
 /* unofficial forums */
 
 const express = require("express");
+const morgan = require("morgan");
 const app = express();
 
 process.on("uncaughtException", (error) => {
@@ -9,6 +10,7 @@ process.on("uncaughtException", (error) => {
 
 const api = require("./api");
 
+app.use(morgan("default"));
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
