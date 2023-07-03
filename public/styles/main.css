@@ -8,6 +8,7 @@
     --light: rgba(255, 255, 255, 0.25);
     --highlight: rgba(255, 255, 255, 0.5);
     --color-highlight: rgb(32, 32, 32);
+    --link: rgb(32, 64, 200);
 }
 
 * {
@@ -40,6 +41,8 @@ h6 {
 
 a {
     user-select: unset;
+    text-decoration: none;
+    color: var(--link);
 }
 
 header>a {
