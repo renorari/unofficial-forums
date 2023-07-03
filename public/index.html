@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unofficial Forums</title>
+
+    <link rel="stylesheet" href="styles/main.css">
+    <script src="scripts/create.js"></script>
+    <script src="scripts/boards.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>Unofficial Forums</h1>
+    </header>
+
+    <main>
+        <section id="boards">
+            <h2>Boards</h2>
+            <button id="load_more" onclick="amount = amount + 5; loadBoards();">Load More</button>
+        </section>
+        <section id="create_board">
+            <h2>Create new board</h2>
+            <form id="board_create" onsubmit="createBoard(); return false;">
+                <label for="board_name">Board Name</label>
+                <input type="text" name="board_name" id="board_name" autocomplete="off">
+                <label for="board_description">Board Description</label>
+                <input type="text" name="board_description" id="board_description" autocomplete="off">
+                <input type="checkbox" name="board_hidden" id="board_hidden">
+                <label for="board_hidden">Hidden</label>
+                <input type="submit" value="Create">
+            </form>
+        </section>
+    </main>
+</body>
+
+</html>

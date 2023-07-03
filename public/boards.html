@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unofficial Forums</title>
+
+    <link rel="stylesheet" href="styles/main.css">
+    <script src="scripts/create.js"></script>
+    <script src="scripts/boards.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>Unofficial Forums</h1>
+        <span id="name">あいうえお</span>
+    </header>
+
+    <main>
+        <section id="create_post">
+            <h2>Create new post</h2>
+            <form id="board_create" onsubmit="createBoard(); return false;">
+                <label for="user_name">Your Name</label>
+                <input type="text" name="user_name" id="user_name" autocomplete="off">
+                <label for="content">Content</label>
+                <input type="text" name="content" id="content" autocomplete="off">
+                <input type="submit" value="Post">
+            </form>
+        </section>
+        <section id="boards">
+            <h2>Posts</h2>
+            <button id="load_more" onclick="amount = amount + 5; loadBoards();">Load More</button>
+        </section>
+    </main>
+</body>
+
+</html>
