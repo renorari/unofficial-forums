@@ -28,15 +28,6 @@ function loadPosts() {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
-    const boardID = window.location.pathname.split("/")[2];
-    const response = await fetch(`/api/boards/${boardID}`);
-    const data = await response.json();
-    if (Object.prototype.hasOwnProperty.call(data, "error")) {
-        return alert(data.error);
-    }
-    document.title = `${data.name} | Unofficial Forums`;
-    document.querySelector("header>a>h1").innerHTML = escapeHTML(data.name);
-    document.querySelector("header>#description").innerHTML = escapeHTML(data.description);
     loadPosts();
     setInterval(loadPosts, 5000);
 });
