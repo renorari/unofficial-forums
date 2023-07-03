@@ -39,7 +39,7 @@ h6 {
 }
 
 a {
-    user-select: unset !important;
+    user-select: unset;
 }
 
 header>a {
