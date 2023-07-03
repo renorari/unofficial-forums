@@ -17,9 +17,9 @@ function loadPosts() {
                     <!--<a href="/posts/${post.id}">-->
                         <h3 class="tooltip">
                             <span class="tooltip-text">${post.user_id}</span>
-                            ${post.name}
+                            ${escapeHTML(post.name)}
                         </h3>
-                        <p>${post.content}</p>
+                        <p>${escapeHTML(post.content)}</p>
                     <!--</a>-->
                 `;
                 posts.insertBefore(postElement, document.querySelector("#load_more"));
@@ -35,8 +35,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         return alert(data.error);
     }
     document.title = `${data.name} | Unofficial Forums`;
-    document.querySelector("header>a>h1").innerHTML = data.name;
-    document.querySelector("header>#description").innerHTML = data.description;
+    document.querySelector("header>a>h1").innerHTML = escapeHTML(data.name);
+    document.querySelector("header>#description").innerHTML = escapeHTML(data.description);
     loadPosts();
     setInterval(loadPosts, 5000);
 });

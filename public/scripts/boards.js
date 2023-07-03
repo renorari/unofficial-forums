@@ -13,8 +13,8 @@ function loadBoards() {
             boardElement.classList.add("board");
             boardElement.innerHTML = `
                 <a href="/boards/${board.id}">
-                    <h3>${board.name}</h3>
-                    <p>${board.description}</p>
+                    <h3>${escapeHTML(board.name)}</h3>
+                    <p>${escapeHTML(board.description)}</p>
                 </a>
             `;
             boards.insertBefore(boardElement, document.querySelector("#load_more"));
