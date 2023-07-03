@@ -7,6 +7,8 @@ function escapeHTML(string) {
             "<": "&lt;",
             ">": "&gt;",
             "&": "&amp;",
+            "'": "'",
+            "`": "`",
             "\"": "&quot;",
         }[match];
     });
