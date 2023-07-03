@@ -19,7 +19,7 @@ function loadPosts() {
                             <span class="tooltip-text">${post.user_id}</span>
                             ${escapeHTML(post.name)}
                         </h3>
-                        <p>${escapeHTML(post.content.replace(/((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)/gi, '<a href="$1">$1</a>'))}</p>
+                        <p>${escapeHTML(post.content).replace(/((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)/gi, '<a href="$1">$1</a>')}</p>
                     <!--</a>-->
                 `;
                 posts.insertBefore(postElement, document.querySelector("#load_more"));
