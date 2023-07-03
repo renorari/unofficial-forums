@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 async function createPost() {
     const boardID = window.location.pathname.split("/")[2];
     const name = document.querySelector("form#post_create #user_name").value;
-    const content = document.querySelector("form#post_create post_content").value;
+    const content = document.querySelector("form#post_create #post_content").value;
     if (!name || !content) {
         return alert("Missing required fields.");
     }
