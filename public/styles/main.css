@@ -38,6 +38,10 @@ h6 {
     margin: 0;
 }
 
+a {
+    user-select: unset !important;
+}
+
 header>a {
     text-decoration: none;
     color: var(--background);
