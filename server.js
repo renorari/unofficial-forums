@@ -32,7 +32,7 @@ app.get("/boards/:boardID", (req, res) => {
         } else {
             const board = results[0];
             const html = fs.readFileSync(__dirname + "/public/boards.html", "utf8").replace(/{{boardName}}/g, board.name).replace(/{{boardDescription}}/g, board.description);
-            if (!board.visible) {
+            if (!board.visibility) {
                 res.setHeader("X-Robots-Tag", "noindex").send(html);
             } else {
                 res.send(html);
