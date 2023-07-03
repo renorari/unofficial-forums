@@ -5,6 +5,7 @@ const app = express.Router();
 const crypto = require("node:crypto");
 const cors = require("cors");
 const db = require("./database");
+const getIP = require("./getIP");
 const { generateToken, generateID } = require("./generate_id");
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
@@ -13,7 +14,7 @@ app.use(express.json());
 app.post("/boards", async (req, res) => {
     const { name, description, visibility } = req.body;
     const id = crypto.randomBytes(16).toString("hex");
-    const userID = generateID(req.ip);
+    const userID = generateID(getIP(req));
     const token = generateToken(userID);
     if (!name || !description) {
         return res.status(400).json({ error: "Missing required fields." });
@@ -145,7 +146,7 @@ app.delete("/boards/:id", async (req, res) => {
 app.post("/boards/:id/posts", async (req, res) => {
     const { id } = req.params;
     const { name, content } = req.body;
-    const userID = generateID(req.ip);
+    const userID = generateID(getIP(req));
     const token = generateToken(userID);
     if (!name || !content) {
         return res.status(400).json({ error: "Missing required fields." });
