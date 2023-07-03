@@ -29,7 +29,7 @@ function loadPosts() {
 
 document.addEventListener("DOMContentLoaded", async () => {
     if (localStorage.getItem("user_name")) {
-        document.querySelector("form#post_create input#user_name").value = localStorage.getItem("user_name");
+        document.querySelector("form#post_create #user_name").value = localStorage.getItem("user_name");
     }
     loadPosts();
     setInterval(loadPosts, 5000);
@@ -38,8 +38,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 // eslint-disable-next-line no-unused-vars
 async function createPost() {
     const boardID = window.location.pathname.split("/")[2];
-    const name = document.querySelector("form#post_create input#user_name").value;
-    const content = document.querySelector("form#post_create input#post_content").value;
+    const name = document.querySelector("form#post_create #user_name").value;
+    const content = document.querySelector("form#post_create post_content").value;
     if (!name || !content) {
         return alert("Missing required fields.");
     }
@@ -64,8 +64,8 @@ async function createPost() {
         if (Object.prototype.hasOwnProperty.call(data, "error")) {
             return alert(data.error);
         }
-        document.querySelector("form#post_create input#user_name").value = name;
-        document.querySelector("form#post_create input#post_content").value = "";
+        document.querySelector("form#post_create #user_name").value = name;
+        document.querySelector("form#post_create #post_content").value = "";
         localStorage.setItem(data.id, data.token);
         localStorage.setItem("user_name", name);
         loadPosts();

@@ -29,9 +29,9 @@ document.addEventListener("DOMContentLoaded", loadBoards);
 
 // eslint-disable-next-line no-unused-vars
 async function createBoard() {
-    const name = document.querySelector("form#board_create input#board_name").value;
-    const description = document.querySelector("form#board_create input#board_description").value;
-    const hidden = document.querySelector("form#board_create input#board_hidden").checked;
+    const name = document.querySelector("form#board_create #board_name").value;
+    const description = document.querySelector("form#board_create #board_description").value;
+    const hidden = document.querySelector("form#board_create #board_hidden").checked;
     if (!name || !description) {
         return alert("Missing required fields.");
     }

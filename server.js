@@ -13,7 +13,7 @@ process.on("uncaughtException", (error) => {
 const api = require("./api");
 
 app.use(morgan("combined"));
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
@@ -37,6 +37,25 @@ app.get("/boards/:boardID", (req, res) => {
             } else {
                 res.send(html);
             }
+        }
+    });
+});
+
+app.get("/sitemap.xml", (req, res) => {
+    db.query("SELECT * FROM boards", (error, results) => {
+        if (error) {
+            console.error(error);
+            res.status(500).send("Internal server error.");
+        } else {
+            let xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"><url><loc>https://forums.unofficial.one/</loc><changefreq>always</changefreq><priority>1</priority></url>";
+            for (const board of results) {
+                if (board.visibility) {
+                    xml += `<url><loc>https://forums.unofficial.one/boards/${board.id}</loc><changefreq>always</changefreq><priority>0.8</priority></url>`;
+                }
+            }
+            xml += "</urlset>";
+            res.setHeader("Content-Type", "text/xml");
+            res.send(xml);
         }
     });
 });
