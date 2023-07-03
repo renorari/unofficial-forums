@@ -19,13 +19,15 @@ async function handleDisconnect() {
         console.log("Connected to MySQL database.");
     } catch (error) {
         console.error(error);
-        setTimeout(handleDisconnect, 1000);
+        connection.end();
+        setTimeout(handleDisconnect, 5000);
     }
 
     connection.on("error", async (error) => {
         console.error(error);
+        connection.end();
         console.log("Reconnecting to MySQL database...");
-        await handleDisconnect();
+        setTimeout(handleDisconnect, 5000);
     });
 }
 

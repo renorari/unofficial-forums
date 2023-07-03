@@ -26,3 +26,41 @@ function loadBoards() {
 }
 
 document.addEventListener("DOMContentLoaded", loadBoards);
+
+// eslint-disable-next-line no-unused-vars
+async function createBoard() {
+    const name = document.querySelector("form#board_create input#board_name").value;
+    const description = document.querySelector("form#board_create input#board_description").value;
+    const hidden = document.querySelector("form#board_create input#board_hidden").checked;
+    if (!name || !description) {
+        return alert("Missing required fields.");
+    }
+    if (name.length > 64) {
+        return alert("Board name must be less than 64 characters.");
+    }
+    if (description.length > 256) {
+        return alert("Board description must be less than 256 characters.");
+    }
+    try {
+        const response = await fetch("/api/boards", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                name: name,
+                description: description,
+                visibility: !hidden
+            }),
+        });
+        const data = await response.json();
+        if (Object.prototype.hasOwnProperty.call(data, "error")) {
+            return alert(data.error);
+        }
+        localStorage.setItem(data.id, data.token);
+        window.location.href = `/boards/${data.id}`;
+    } catch (error) {
+        console.error(error);
+        alert("Internal server error.");
+    }
+}

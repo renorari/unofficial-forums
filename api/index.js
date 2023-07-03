@@ -79,6 +79,8 @@ app.get("/boards/:id", async (req, res) => {
         const board = {
             id: boards[0].id,
             name: boards[0].name,
+            description: boards[0].description,
+            last_active: boards[0].last_active,
             visibility: boards[0].visibility
         };
         res.status(200).json(board);
@@ -159,7 +161,7 @@ app.post("/boards/:id/posts", async (req, res) => {
         if (boards.length === 0) {
             return res.status(404).json({ error: "Board not found." });
         }
-        await db.promise().query("INSERT INTO posts (id, name, content, board_id, token) VALUES (?, ?, ?, ?, ?)", [token, name, content, id, token]);
+        await db.promise().query("INSERT INTO posts (id, name, user_id, content, board_id, time, token) VALUES (?, ?, ?, ?, ?, ?, ?)", [id, name, userID, content, id, new Date(), token]);
         await db.promise().query("UPDATE boards SET last_active = ? WHERE id = ?", [new Date(), id]);
         res.status(201).json({ id, token });
     } catch (error) {
@@ -169,13 +171,30 @@ app.post("/boards/:id/posts", async (req, res) => {
 });
 app.get("/boards/:id/posts", async (req, res) => {
     const { id } = req.params;
+    const { sort, amount } = req.query;
     try {
         const [boards] = await db.promise().query("SELECT * FROM boards WHERE id = ?", [id]);
         if (boards.length === 0) {
             return res.status(404).json({ error: "Board not found." });
         }
         const [rawPosts] = await db.promise().query("SELECT * FROM posts WHERE board_id = ?", [id]);
-        const posts = rawPosts.map((post) => ({ id: post.id, name: post.name, content: post.content }));
+        const posts = rawPosts.map((post) => ({ id: post.id, name: post.name, user_id: post.user_id, content: post.content, time: post.time }));
+        if (sort === "time") {
+            posts.sort((a, b) => new Date(b.time) - new Date(a.time));
+        } else if (sort === "name") {
+            posts.sort((a, b) => a.name.localeCompare(b.name));
+        } else if (sort) {
+            return res.status(400).json({ error: "Invalid sort method." });
+        }
+        if (amount) {
+            if (isNaN(amount)) {
+                return res.status(400).json({ error: "Invalid amount." });
+            }
+            if (amount < 1) {
+                return res.status(400).json({ error: "Invalid amount." });
+            }
+            posts.splice(amount);
+        }
         res.status(200).json(posts);
     } catch (error) {
         console.error(error);
@@ -190,7 +209,7 @@ app.get("/boards/:id/posts/:postID", async (req, res) => {
             return res.status(404).json({ error: "Board not found." });
         }
         const [rawPosts] = await db.promise().query("SELECT * FROM posts WHERE board_id = ?", [id]);
-        const posts = rawPosts.map((post) => ({ id: post.id, name: post.name, content: post.content }));
+        const posts = rawPosts.map((post) => ({ id: post.id, name: post.name, user_id: post.user_id, content: post.content, time: post.time }));
         const post = posts.find((post) => post.id === postID);
         if (!post) {
             return res.status(404).json({ error: "Post not found." });
@@ -223,8 +242,7 @@ app.put("/boards/:id/posts/:postID", async (req, res) => {
             return res.status(404).json({ error: "Board not found." });
         }
         const [rawPosts] = await db.promise().query("SELECT * FROM posts WHERE board_id = ?", [id]);
-        const posts = rawPosts.map((post) => ({ id: post.id, name: post.name, content: post.content }));
-        const post = posts.find((post) => post.id === postID);
+        const post = rawPosts.find((post) => post.id === postID);
         if (!post) {
             return res.status(404).json({ error: "Post not found." });
         }
@@ -250,8 +268,7 @@ app.delete("/boards/:id/posts/:postID", async (req, res) => {
             return res.status(404).json({ error: "Board not found." });
         }
         const [rawPosts] = await db.promise().query("SELECT * FROM posts WHERE board_id = ?", [id]);
-        const posts = rawPosts.map((post) => ({ id: post.id, name: post.name, content: post.content }));
-        const post = posts.find((post) => post.id === postID);
+        const post = rawPosts.find((post) => post.id === postID);
         if (!post) {
             return res.status(404).json({ error: "Post not found." });
         }
