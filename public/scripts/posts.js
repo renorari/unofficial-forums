@@ -28,6 +28,9 @@ function loadPosts() {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
+    if (localStorage.getItem("user_name")) {
+        document.querySelector("form#post_create input#user_name").value = localStorage.getItem("user_name");
+    }
     loadPosts();
     setInterval(loadPosts, 5000);
 });
@@ -64,6 +67,7 @@ async function createPost() {
         document.querySelector("form#post_create input#user_name").value = name;
         document.querySelector("form#post_create input#post_content").value = "";
         localStorage.setItem(data.id, data.token);
+        localStorage.setItem("user_name", name);
         loadPosts();
     } catch (error) {
         console.error(error);
