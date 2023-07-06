@@ -3,6 +3,8 @@
 :root {
     --background: rgb(240, 240, 240);
     --color: rgb(16, 16, 16);
+    --header-button-background: rgb(16,16,16);
+    --header-button-color: rgb(240, 240, 240);
     --border: rgba(16, 16, 16, 0.25);
     --shadow: rgba(0, 0, 0, 0.125);
     --light: rgba(255, 255, 255, 0.25);
@@ -10,10 +12,25 @@
     --color-highlight: rgb(32, 32, 32);
     --link: rgb(32, 64, 200);
 }
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background: rgb(24, 24, 24);
+        --color: rgb(240, 240, 240);
+        --header-button-background: rgb(16, 16, 16);
+        --header-button-color: rgb(240, 240, 240);
+        --border: rgba(240, 240, 240, 0.25);
+        --shadow: rgba(255, 255, 255, 0.125);
+        --light: rgba(0, 0, 0, 0.25);
+        --highlight: rgba(255, 255, 255, 0.05);
+        --color-highlight: rgb(64, 64, 64);
+        --link: rgb(48, 128, 240);
+    }
+}
 
 * {
     box-sizing: border-box;
     user-select: none;
+    overflow-wrap: break-word;
 }
 
 body {
@@ -24,8 +41,8 @@ body {
 }
 
 header {
-    background: var(--color);
-    color: var(--background);
+    background: var(--header-button-background);
+    color: var(--header-button-color);
     padding: 1em;
     text-align: center;
 }
@@ -47,7 +64,7 @@ a {
 
 header>a {
     text-decoration: none;
-    color: var(--background);
+    color: var(--header-button-color);
 }
 
 #boards {
@@ -94,10 +111,10 @@ header>a {
 
 #boards>button {
     width: 100%;
-    background: var(--color);
+    background: var(--header-button-background);
     border: 1px solid var(--border);
     border-radius: 0.5em;
-    color: var(--background);
+    color: var(--header-button-color);
     margin: 1em 0;
     margin-bottom: 0;
     padding: 0.5em;
@@ -191,7 +208,7 @@ header>a {
 }
 
 #create_board>form>input[type="checkbox"]::before {
-    background-color: var(--background);
+    background: var(--header-button-background);
     border-radius: 0%;
     border: 1px solid var(--border);
     border-radius: 0.25em;
@@ -220,10 +237,10 @@ header>a {
 
 #create_board>form>input[type="submit"] {
     width: 100%;
-    background: var(--color);
+    background: var(--header-button-background);
     border: 1px solid var(--border);
     border-radius: 0.5em;
-    color: var(--background);
+    color: var(--header-button-color);
     margin: 1em 0;
     margin-bottom: 0;
     padding: 0.5em;
@@ -236,7 +253,7 @@ header>a {
 }
 
 #create_board>form>input[type="submit"]:active {
-    background: var(--color);
+    background: var(--header-button-background);
     box-shadow: 0.125em 0.125em 0.25em var(--shadow) inset, -0.125em -0.125em 0.25em var(--light) inset;
 }
 
@@ -301,10 +318,10 @@ header>a {
 
 #create_post>form>input[type="submit"] {
     width: 100%;
-    background: var(--color);
+    background: var(--header-button-background);
     border: 1px solid var(--border);
     border-radius: 0.5em;
-    color: var(--background);
+    color: var(--header-button-color);
     margin: 1em 0;
     margin-bottom: 0;
     padding: 0.5em;
@@ -317,7 +334,7 @@ header>a {
 }
 
 #create_post>form>input[type="submit"]:active {
-    background: var(--color);
+    background: var(--header-button-background);
     box-shadow: 0.125em 0.125em 0.25em var(--shadow) inset, -0.125em -0.125em 0.25em var(--light) inset;
 }
 
@@ -373,10 +390,10 @@ header>a {
 
 #posts>button {
     width: 100%;
-    background: var(--color);
+    background: var(--header-button-background);
     border: 1px solid var(--border);
     border-radius: 0.5em;
-    color: var(--background);
+    color: var(--header-button-color);
     margin: 1em 0;
     margin-bottom: 0;
     padding: 0.5em;
@@ -389,7 +406,7 @@ header>a {
 }
 
 #posts>button:active {
-    background: var(--color);
+    background: var(--header-button-background);
     box-shadow: 0.125em 0.125em 0.25em var(--shadow) inset, -0.125em -0.125em 0.25em var(--light) inset;
 }
 
@@ -410,8 +427,8 @@ header>a {
     white-space: nowrap;
     font-size: 0.5em;
     line-height: 1.3;
-    background: var(--color);
-    color: var(--background);
+    background: var(--header-button-background);
+    color: var(--header-button-color);
     border-radius: 0.5em;
     box-shadow: 0.125em 0.125em 0.25em var(--shadow);
     transition: 0.25s ease-in-out;

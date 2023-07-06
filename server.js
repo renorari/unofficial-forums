@@ -6,10 +6,6 @@ const morgan = require("morgan");
 const db = require("./api/database");
 const app = express();
 
-process.on("uncaughtException", (error) => {
-    console.error(error);
-});
-
 const api = require("./api");
 
 app.use(morgan("combined"));
