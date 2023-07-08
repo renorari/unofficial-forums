@@ -141,6 +141,7 @@ header>a {
 #create_board>form>input[type="text"] {
     width: 100%;
     background: none;
+    color: var(--color);
     border: 1px solid var(--border);
     border-radius: 0.5em;
     margin: 0.5em 0;
@@ -162,6 +163,7 @@ header>a {
 #create_board>form>textarea {
     width: 100%;
     background: none;
+    color: var(--color);
     border: 1px solid var(--border);
     border-radius: 0.5em;
     margin: 0.5em 0;
@@ -277,6 +279,7 @@ header>a {
 #create_post>form>input[type="text"] {
     width: 100%;
     background: none;
+    color: var(--color);
     border: 1px solid var(--border);
     border-radius: 0.5em;
     margin: 0.5em 0;
@@ -298,6 +301,7 @@ header>a {
 #create_post>form>textarea {
     width: 100%;
     background: none;
+    color: var(--color);
     border: 1px solid var(--border);
     border-radius: 0.5em;
     margin: 0.5em 0;
