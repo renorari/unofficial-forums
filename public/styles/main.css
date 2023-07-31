@@ -210,7 +210,7 @@ header>a {
 }
 
 #create_board>form>input[type="checkbox"]::before {
-    background: var(--header-button-background);
+    /*background: var(--header-button-background);*/
     border-radius: 0%;
     border: 1px solid var(--border);
     border-radius: 0.25em;
