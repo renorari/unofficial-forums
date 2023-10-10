@@ -14,7 +14,8 @@ app.use(express.json());
 app.post("/boards", async (req, res) => {
     const { name, description, visibility } = req.body;
     const id = crypto.randomBytes(16).toString("hex");
-    const userID = generateID(getIP(req));
+    const ip = getIP(req);
+    const userID = generateID(ip);
     const token = generateToken(userID);
     if (!name || !description) {
         return res.status(400).json({ error: "Missing required fields." });
@@ -26,7 +27,7 @@ app.post("/boards", async (req, res) => {
         return res.status(400).json({ error: "Description too long." });
     }
     try {
-        await db.promise().query("INSERT INTO boards (id, name, description, visibility, last_active, token) VALUES (?, ?, ?, ?, ?, ?)", [id, name, description, visibility, new Date(), token]);
+        await db.promise().query("INSERT INTO boards (id, name, description, visibility, last_active, token, ip) VALUES (?, ?, ?, ?, ?, ?, ?)", [id, name, description, visibility, new Date(), token, ip]);
         res.status(201).json({ id, token });
     } catch (error) {
         console.error(error);
@@ -146,7 +147,8 @@ app.delete("/boards/:id", async (req, res) => {
 app.post("/boards/:id/posts", async (req, res) => {
     const { id } = req.params;
     const { name, content } = req.body;
-    const userID = generateID(getIP(req));
+    const ip = getIP(req);
+    const userID = generateID(ip);
     const token = generateToken(userID);
     if (!name || !content) {
         return res.status(400).json({ error: "Missing required fields." });
@@ -162,7 +164,7 @@ app.post("/boards/:id/posts", async (req, res) => {
         if (boards.length === 0) {
             return res.status(404).json({ error: "Board not found." });
         }
-        await db.promise().query("INSERT INTO posts (id, name, user_id, content, board_id, time, token) VALUES (?, ?, ?, ?, ?, ?, ?)", [id, name, userID, content, id, new Date(), token]);
+        await db.promise().query("INSERT INTO posts (id, name, user_id, content, board_id, time, token, ip) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", [id, name, userID, content, id, new Date(), token, ip]);
         await db.promise().query("UPDATE boards SET last_active = ? WHERE id = ?", [new Date(), id]);
         res.status(201).json({ id, token });
     } catch (error) {
