@@ -42,6 +42,10 @@ async function createBoard() {
         return alert("Board description must be less than 256 characters.");
     }
     try {
+        if (!localStorage.getItem("deviceId")) {
+            const deviceId = generateUUID();
+            localStorage.setItem("deviceId", deviceId);
+        }
         const response = await fetch("/api/boards", {
             method: "POST",
             headers: {
@@ -50,7 +54,8 @@ async function createBoard() {
             body: JSON.stringify({
                 name: name,
                 description: description,
-                visibility: !hidden
+                visibility: !hidden,
+                deviceId: localStorage.getItem("deviceId")
             }),
         });
         const data = await response.json();

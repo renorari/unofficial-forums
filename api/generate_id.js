@@ -8,9 +8,9 @@ function generateToken(id) {
     return `${prefix}.${uuid}`;
 }
 
-function generateID(ip) {
+function generateID(ip, info) {
     const date = new Date();
-    const hashed = crypto.createHash("md5").update(`${ip}.${date.getUTCFullYear()}${date.getUTCMonth()}${date.getUTCDate()}`).digest("hex");
+    const hashed = crypto.createHash("md5").update(`${ip}.${date.getUTCFullYear()}${date.getUTCMonth()}${date.getUTCDate()}.${info}`).digest("hex");
     return hashed;
 }
 

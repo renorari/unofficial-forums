@@ -49,6 +49,10 @@ async function createPost() {
     if (content.length > 256) {
         return alert("Post content must be less than 256 characters.");
     }
+    if (!localStorage.getItem("deviceId")) {
+        const deviceId = generateUUID();
+        localStorage.setItem("deviceId", deviceId);
+    }
     try {
         const response = await fetch(`/api/boards/${boardID}/posts`, {
             method: "POST",
@@ -57,7 +61,8 @@ async function createPost() {
             },
             body: JSON.stringify({
                 name: name,
-                content: content
+                content: content,
+                deviceId: localStorage.getItem("deviceId")
             }),
         });
         const data = await response.json();

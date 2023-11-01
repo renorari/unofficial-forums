@@ -12,10 +12,10 @@ app.use(cors());
 app.use(express.json());
 
 app.post("/boards", async (req, res) => {
-    const { name, description, visibility } = req.body;
+    const { name, description, visibility, deviceId } = req.body;
     const id = crypto.randomBytes(16).toString("hex");
     const ip = getIP(req);
-    const userID = generateID(ip);
+    const userID = generateID(ip, deviceId);
     const token = generateToken(userID);
     if (!name || !description) {
         return res.status(400).json({ error: "Missing required fields." });
@@ -146,9 +146,9 @@ app.delete("/boards/:id", async (req, res) => {
 });
 app.post("/boards/:id/posts", async (req, res) => {
     const { id } = req.params;
-    const { name, content } = req.body;
+    const { name, content, deviceId } = req.body;
     const ip = getIP(req);
-    const userID = generateID(ip);
+    const userID = generateID(ip, deviceId);
     const token = generateToken(userID);
     if (!name || !content) {
         return res.status(400).json({ error: "Missing required fields." });
